@@ -63,11 +63,11 @@ Validation errors come back as a map of field → message. Server errors return 
 
 ---
 
-## Useful links
+## Useful links:--
 
 | Frontend | http://localhost:4200 |
 | Swagger UI | http://localhost:8080/swagger-ui.html |
-| H2 Console | http://localhost:8080/h2-console |
+
 
 H2 connection: `jdbc:h2:mem:customerdb` / username `sa` / no password
 
