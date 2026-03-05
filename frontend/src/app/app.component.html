@@ -1,0 +1,17 @@
+<!-- App Shell -->
+<header class="app-header">
+  <div class="header-inner">
+    <span class="logo">👤 Customer Management</span>
+  </div>
+</header>
+
+<main class="app-main">
+  <div class="container">
+    <app-customer-form (customerCreated)="onCustomerCreated()"></app-customer-form>
+    <app-customer-list></app-customer-list>
+  </div>
+</main>
+
+<footer class="app-footer">
+  <p>Customer Management System &copy; 2026</p>
+</footer>

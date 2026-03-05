@@ -1,0 +1,101 @@
+<div class="list-card">
+  <div class="list-header">
+    <h2 class="list-title">Customer Records</h2>
+    <button class="btn btn-outline" (click)="loadCustomers()">↻ Refresh</button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading customers...</p>
+  </div>
+
+  <div *ngIf="errorMessage && !isLoading" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage && customers.length === 0" class="empty-state">
+    <p>No customers found. Add your first customer above.</p>
+  </div>
+
+  <div *ngIf="!isLoading && customers.length > 0" class="table-wrapper">
+    <table class="customer-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Date of Birth</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ customer.firstName }}</td>
+          <td>{{ customer.lastName }}</td>
+          <td>{{ customer.dateOfBirth | date:'d MMM yyyy' }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline" (click)="viewCustomer(customer.id)">
+              View
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="record-count">{{ customers.length }} customer(s)</p>
+  </div>
+
+  <!-- Customer Detail Panel -->
+  <div *ngIf="selectedCustomer" class="detail-panel">
+    <div class="detail-header">
+      <h3>Customer Detail</h3>
+      <button class="btn-close" (click)="clearSelection()">✕</button>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row">
+        <span class="detail-label">ID</span>
+        <span class="detail-value">{{ selectedCustomer.id }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">First Name</span>
+        <span class="detail-value">{{ selectedCustomer.firstName }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Last Name</span>
+        <span class="detail-value">{{ selectedCustomer.lastName }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Date of Birth</span>
+        <span class="detail-value">{{ selectedCustomer.dateOfBirth | date:'d MMM yyyy' }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Created</span>
+        <span class="detail-value">{{ selectedCustomer.createdAt | date:'d MMM yyyy, h:mm a' }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Last Updated</span>
+        <span class="detail-value">{{ selectedCustomer.updatedAt | date:'d MMM yyyy, h:mm a' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search by ID -->
+  <div class="search-panel">
+    <h3>Find by ID</h3>
+    <div class="search-row">
+      <input
+        type="number"
+        [(ngModel)]="searchId"
+        placeholder="Enter customer ID"
+        class="search-input"
+        min="1"
+      />
+      <button class="btn btn-primary" (click)="findById()" [disabled]="!searchId">Search</button>
+      <button class="btn btn-secondary" (click)="clearSearch()" *ngIf="searchId">Clear</button>
+    </div>
+    <div *ngIf="searchError" class="alert alert-error" style="margin-top: 8px;">
+      {{ searchError }}
+    </div>
+  </div>
+
+</div>
